@@ -1,59 +1,42 @@
-<script context="module" lang="ts">
-	export const prerender = true;
-</script>
-
-<script lang="ts">
-	import Counter from '$lib/Counter/index.svelte';
+<script>
+	import Profile from '$lib/Profile/Profile.svelte';
+	// import { posts } from "./blog/_posts";
+	// const latestPost = posts[0];
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>R-BT</title>
+	<meta name="description" content="R-BT personal site" />
 </svelte:head>
 
-<section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp">
-				<img src="svelte-welcome.png" alt="Welcome"/>
-			</picture>
-		</div>
+<Profile />
 
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
+<div class="brief info">
+	<p>Hi I'm Richard. This site is a place for me to collect all my thoughts.</p>
+	<!-- <div class="section">
+	  <h3>What have I recently written:</h3>
+	  <a href="/blog/{latestPost.permalink}">{latestPost.title}</a>
+	</div> -->
+	<div class="section">
+		<h3>What I'm currently working on</h3>
+		<a href="https://prepsheets.com">PrepSheets</a>
+	</div>
+	<div class="section">
+		<h3>What I previously worked on</h3>
+		<a href="https://abstracts.societyforscience.org/Home/FullAbstract?ProjectId=17466"
+			>BatIdentification</a
+		>
+		<a href="https://www.producthunt.com/posts/ndesk">NDesk</a>
+	</div>
+</div>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
+	.section {
+		margin-bottom: 2rem;
 	}
 
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
+	.section a {
 		display: block;
+		margin-top: 0.5rem;
 	}
 </style>

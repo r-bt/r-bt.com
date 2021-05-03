@@ -1,0 +1,273 @@
+---
+title: Varsity Sparks Crowdfunding Campaign
+seoTitle: Varsity Sparks Crowdfunding Campaign
+url: varsity-sparks-crowdfunding-campaign
+description: Learnings from making a crowdfunding campaign for the VarsitySparks competition
+abstract: Learnings from making a crowdfunding campaign for the VarsitySparks competition
+isPublished: true
+publishedOn: 2021-03-27T09:15:00-0000
+layout: article
+---
+
+<script>
+    import PrepsheetsScreenshotOriginal from './Prepsheets-Screenshot.png??w=600;800;1200&webp&srcset'
+    import PrepsheetsScreenshotStaged from './Prepsheets-Staged.jpg?w=600;800;1200&webp&srcset'
+    import EditingInGimp from './Editing-In-Gimp.png?w=600;800;1200&webp&srcset'
+    import StagedWithScreenshot from './Staged-With-Screenshot.jpg?w=600;800;1200&webp&srcset'
+    import VarsitySparksCoverImage from './VarsitySparksCoverImage.jpg?w=600;800;1200&webp&srcset'
+</script>
+
+Over the weekend I was told that [Prepsheets.com](http://prepsheets.com) got through to the semi-finals [Varsity Sparks](https://varsitysparks.com/) – an entrepreneurial competition being run by third-level students in Ireland. Its _unique spin_ is that the winners are decided by which project gets the most **virtual investment** from other students. All third-level students will be given a virtual €10,000 to invest in projects crowdfunding campaigns.
+
+Now, I've never done a crowdfunding campaign before so I'll going to talk though my learnings and decisions here.
+
+---
+
+## Requirements
+
+I need 4 things for the campaign:
+
+- A logo / cover image
+- A description of the idea (maximum 500 words)
+- A 3-minute video pitch
+- A 10 slide presentation
+
+---
+
+## Logo / Cover Image
+
+This is the image that is going to be displayed on the list of all the campaigns, it'll be 350px x 200px so I'm thinking that a picture of the product would be best.
+
+I've been looking over SasS kickstarter campaigns (there's not that many, it's not the best place to raise money for SasS) and I quite like [Seedtime](https://www.kickstarter.com/projects/pauldysinger/seedtime-the-fastest-way-to-plan-your-garden-ever?ref=discovery_category)'s campaign. I took inspiration from them when creating my cover image. I also read [Kickstarters advice](https://www.kickstarter.com/help/images).
+
+**Warning in advance I definitely put way more time that I should have, but it was pretty fun.**
+
+Firstly I needed [Prepsheets.com](http://prepsheets.com) to take up the full screen of my laptop. I used some javascript in Firefox's console to do this.
+
+```jsx
+document.documentElement.requestFullScreen();
+```
+
+- Note you actually have to run this in a button's click event handler
+
+Once Firefox was full screen I took a screen shot so I could do edits later:
+
+<img srcset={PrepsheetsScreenshotOriginal} alt="Prepsheets.com Lemon Drizzle Cake Screenshot" />
+
+[Prepsheets.com](http://prepsheets.com) Lemon Drizzle Cake Screenshot
+
+Then I needed somewhere to place my laptop with some props around it. Thankfully my parents had made _sourdough_ and _sausage rolls_ this morning so I'd plenty to work with. The lightning was poor so I used a second phone torch and took dozen of pictures to get the perfect angle. Below was the photo I liked the most. Unfortunately I didn't have a sausage roll recipe but I got tired 💤
+
+<img srcset={PrepsheetsScreenshotStaged} alt="Laptop with Prepsheets.com surrounded by sausage rolls and dough" />
+
+Laptop with [Prepsheets.com](http://prepsheets.com) surrounded by sausage rolls and dough
+
+So this was alright, but I screenshot had become blurry and the colours weren't as sharp so I decided to overly the original screenshot on that image. This actually wasn't that hard using [GIMP](https://www.gimp.org/) and the perspective tool (**Tools > Transform Tools > Perspective**)
+
+<img srcset={EditingInGimp} alt="Matching corners with GIMP perspective tool" />
+
+Matching corners with GIMP perspective tool
+
+All I had to do was match up all the corners and it made the overlay screenshot look natural
+
+<img srcset={StagedWithScreenshot} alt="Staged image with Screenshot overlaid" />
+
+Staged image with Screenshot overlaid
+
+So about now I wanted to stop but then I remembered that I should have auto-enhanced the image, so I dragged the image above into Apple Photos and applied auto-enhance to give the final image.....🎉. It's quite nice and the auto-enhance does make the colours pop more. I've some issues with it but I've exhausted how far I'm willing to go with this.
+
+<img srcset={VarsitySparksCoverImage} alt="Staged image with screenshot overlaid enhanced by Apple Photos" />
+
+Staged image with screenshot overlaid enhanced by Apple Photos
+
+---
+
+## Description of the idea
+
+They gave a maximum of 500 words which is a lot 😬. I guess this is the whole text on the page so I can talk about more that just the idea and also the team; finances; etc.
+
+---
+
+## 10-slide presentation
+
+Thankfully I already made a deck 2 weeks ago for the [NDRC pre-accelerator](https://www.ndrc.ie/pre-accelerator), so I'm going to base a lot of this off that.
+
+General tips apply to this:
+
+→ Images > Words – although as I won't be there to deliver it more words than normal will be required
+
+→ Keep things clear and structured. With slides it's very easy to overwhelm the audience.
+
+Varsity suggests the following structure which I'm going to follow roughly:
+
+1. Introduction
+2. Problem statement /opportunity identified
+3. Proposed solution (your product/service offering)
+4. Value proposition
+5. Business model
+6. Market analysis (target market, market size etc.)
+7. Competitive analysis (current competitors and substitutes)
+8. Team members & roles
+9. Timeline of events (current status and vision for the future)
+10. Financial projections
+
+Also I'm using [Pitch](https://pitch.app) for this as it has, IMO, nicer templates than Google Slides.
+
+→ **You can see the presentation [here](https://app.pitch.com/app/presentation/1cc1d6c2-d6e7-430b-b6bd-37c88548a16c/e9dc79b8-fa52-4ebd-86a9-6f22dc168f79).**
+
+### Introduction (1-2)
+
+I'm using two slides for this as a quite like having the **slogan** on the 2nd and you need a title slide
+
+### Problem statement (3)
+
+This is text-heavy but it's actually hard to use visual elements when I'm not going to be there to elaborate.
+
+### Problem Example (4)
+
+I think the genesis story of Prepsheets is important as it at least proves that one company has this direct issue so I'm not coming at this blind.
+
+Bullet points are key to guide the reader along the slides
+
+### Solution (5 - 6)
+
+This is just a simple sentence explaining what Prepsheets is with a large image, we probably also need to show how we solve the issue said above
+
+### Business Model (7)
+
+### Market Analysis (8)
+
+For this I just got the amount of restaurants, cafés and pubs in both the UK and Ireland and added them together.
+
+Also going to show the competitors. This is just a slide I've made before so it's not that bad.
+
+### Timeline (9)
+
+This contains what I have achieve and hope to achieve in the future.
+
+### Team (10)
+
+Ok so this is a weird one since the team is just me but I guess I can do a small bio about me and that would cover most of the things.
+
+---
+
+## Pitch Video
+
+→ Can be max of 3 mins but they say shorter is better. I'll aim for ~2mins
+
+→ Need to get across my enthusiasm.
+
+→ Can be simple but you need people to actually look at it
+
+- Present my slides with Zoom, like maybe? But will that be engaging.
+
+→ Will need to incorporate visual elements
+
+→ Some ideas of what to talk about:
+
+- Overview of the idea
+- Problem Statement
+- Brief description of product / service
+- Benefits and Value
+- Target market \* analysis
+- Introduction to team members
+
+### Storyboarding
+
+It's a visual medium I'm going to have to storyboard.
+
+Some thoughts first:
+
+- What is video especially good at getting across
+- **Enthusiasm**
+- Visual demonstration of the product
+
+### Script
+
+[ Opening on Prepsheets ]
+
+[ Switch to Richard standing ]
+
+Hi I'm Richard. I'm 19, I'm currently on a gap year from MIT and I'm pitching [prepsheets.com](http://prepsheets.com)
+
+[ New Slide - Recipe Building Software]
+
+The recipe building software tool for hospitality companies.
+
+[ Switch to Richard standing ]
+
+I've been thinking about [Prepsheets.com](http://prepsheets.com) for the past 5 years. My parents run a catering company and 5 cafés in Dublin and Kildare.
+
+[ Switch to image of a plate ]
+
+Through these, they make over 1,500 dishes
+
+[ Show number 1500 ] testing
+
+and for each they need to certain information
+
+the ingredients
+
+[ ingredients appear ]
+
+the allergens,
+
+[allergens appear]
+
+the total cost,
+
+[total cost appear]
+
+and their gross margin
+
+[gross margin appear] ~= 24 seconds
+
+[Back to Richard]
+
+Without these their bottom, line, suffers due to inconsistent portion sizes, poor margins, or compliance issues with their allergens.
+
+[Scroll through recipes]
+
+Over the last 14 years my parent's company has kept this information in Excel. They've written 100s of Sheets, each connecting to one another in a inter-connected web of information.
+
+[Back to Richard]
+
+This worked well at the start but as they grew it fell apart
+
+I've designed [Prepsheets.com](http://prepsheets.com), inside a kitchen, to finally solve this problem.
+
+[Switch to Prepsheets.com]
+
+With [Prepsheets.com](http://prepsheets.com) users can upload their ingredients
+
+[Show upload flow]
+
+and write recipes using those
+
+[Switch to product]
+
+These recipes are guaranteed to ensure consistency in how dishes are made across chefs and venues and
+
+[switch to me looking at computer]
+
+tell managers how much dishes cost; the calories in a dish; the allergens and more.
+
+This insight lets makes hospitality companies high-performance
+
+I'm currently testing [Prepsheets.com](http://prepsheets.com) in 2 companies and am talking to another to come onboard within the next week.
+
+[Switch to slide with Intertrade Ireland]
+
+I've also received a €2500 grant from Intertrade Ireland to develop the product.
+
+[Switch to slide of Ireland and UK]
+
+Across the UK and Ireland there around 29,000 restaurants, 9000 cafés and 53000 pubs.
+
+This market is huge, and restaurants are in dire need of a tool. Their margins are so tight and Covid-19 had been so destructive that tools such [Prepsheets.com](http://prepsheets.com) have giant inpacts and are must-haves.
+
+[Switch to me]
+
+Thanks for watching this and I'd really appreciate your investment
+
+[Switch back to end slide]

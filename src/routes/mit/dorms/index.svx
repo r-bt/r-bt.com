@@ -1,0 +1,90 @@
+<script>
+  import Profile from "$lib/Profile/Profile.svelte";
+</script>
+
+<svelte:head>
+
+  <title>R-BT - 🛏 Dorms - MIT</title>
+  <meta name="description" content="Information about the dorms at MIT" />
+</svelte:head>
+
+<Profile title="🛏 Dorms - MIT" />
+
+**Disclaimer:** I have **no** first-hand experience of MIT dorms. Most MIT
+first-years live in one of 11 houses on campus. You pick which dorms you want to
+live in, and each have different cultures. This is a (growing) collection of information
+I've found while searching for which dorms I want to live in. It's intended to
+remind me of what I've found and potentially help other people start researching
+dorms. However, don't use this on it's own and try talk to actual students in dorms.
+
+If anything I've written is incorrecct or you have more info feel free to contact me or edit the source at: [r-bt.com Github repo](https://github.com/r-bt/r-bt.com)
+
+## General Information
+
+| Name                                            | Considering | Cook for yourself | Capacity | Room Cost       | Singles % | Cats |
+| ----------------------------------------------- | :---------: | :---------------: | -------- | --------------- | --------- | :--: |
+| [Burton Conner House](/mit/dorms/burton-conner) |     ✅      |        ✅         | 371      | N/A             | 77%       |  ❌  |
+| [MacGregor House](/mit/dorms/macgregor)         |     ✅      |        ✅         | 313      | $6,100 - $5,390 | 99%       |  ❌  |
+| [New House](/mit/dorms/new)                     |     ✅      |        ✅         | 290      | $6,530 - $5,775 | 46%       |  ❌  |
+| [Random Hall](/mit/dorms/random)                |     ✅      |        ✅         | 93       | $5,445 - $4,810 | 50%       |  ✅  |
+| [East Campus](/mit/dorms/east-campus)           |     ✅      |        ✅         | 383      | $5,445 - $4,810 | 94%       |  ✅  |
+| [Baker House](/mit/dorms/baker)                 |     ❌      |        ❌         | 383      | $6,530 - $4,560 | 68%       |  ❌  |
+| Maseeh Hall                                     |     ❌      |        ❌         | 500      | $6,530 - $4,560 | 21%       |  ❌  |
+| [New Vassar](/mit/dorms/newvassar)              |     ❌      |        ❌         | 450      | $6,530 - $5,775 | 42%       |  ❌  |
+| Next House                                      |     ❌      |        ❌         | 368      | $6,100 - $4,825 | 69%       |  ❌  |
+| Simmons Hall                                    |     ❌      |        ❌         | 369      | $6,530 - $5,165 | 40%       |  ❌  |
+
+- Note [McCormick](https://mitguidetoresidences.mit.edu/map/mccormick-hall) as a female-only dorm is not included
+
+## Factors I'm considering
+
+- [Cook for myself **or** meal plan?](/mit/dorms/cook-for-yourself): **Cook for myself**
+- East vs West Campus?
+- Do I want a roommate?
+- Big dorm or small dorm?
+- Unified Culture or Floor culture?
+- Do I want a cat in my dorm? **Yes** Don't know why, but cats / dogs always make me smile
+
+## Miscelaneous
+
+Seems like there is a East / West Campus divide in terms of dorm cultures
+
+Uhhh, I can't make decisions anymore (~ Richard after spending two days to only decide I want to cook for myself)
+
+## Links
+
+- [MIT Undergraduate Residence Halls](https://mitguidetoresidences.mit.edu/house-summary)
+- [ Guide to choosing a dorm ](https://mitadmissions.org/blogs/entry/how-to-not-choose-a-dorm/)
+- [Reddit - Overview of Dorm cultures](https://www.reddit.com/r/mit/comments/u203z/dorm_personalities/)
+
+<style>
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 2rem;
+  }
+  table td {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    overflow: hidden;
+    padding: 8px 5px;
+    word-break: normal;
+  }
+  table th {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 8px 5px;
+    word-break: normal;
+    text-align: left;
+    font-weight: bold;
+  }
+  /* x */
+</style>

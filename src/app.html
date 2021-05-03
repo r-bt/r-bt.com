@@ -3,11 +3,20 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+			integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
+			crossorigin="anonymous"
+		/>
 
 		%svelte.head%
 	</head>
-	<body>
+	<body class="line-numbers">
 		<div id="svelte">%svelte.body%</div>
 	</body>
 </html>

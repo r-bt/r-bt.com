@@ -1,0 +1,48 @@
+<script>
+  import Profile from "$lib/Profile/Profile.svelte";
+</script>
+
+<svelte:head>
+
+  <title>R-BT - New House – 🛏 Dorms - MIT</title>
+  <meta name="description" content="Information about New House, MIT" />
+</svelte:head>
+
+<Profile title="New House – 🛏 Dorms - MIT" />
+
+Wow, this is the only dorm with AC!
+
+Has both numbered and cultural houses:
+
+**Numbered Houses:**
+
+- House 2
+- House 3
+- House 4
+- Desmond House
+
+**Cultural Houses:**
+
+- Chocolate City (All black male identifying community)
+- French House
+- German House
+- iHouse
+- Spanish House
+
+Cultural houses have their own selection processes.
+
+I'm not that interested in culture, so I'm going to rule all these out
+
+**Decision:**
+
+## Links
+
+- [MIT Residences – New House](https://mitguidetoresidences.mit.edu/new-house)
+
+### MIT Admissions Blog Posts
+
+<style>
+    .split {
+        display: flex;
+    }
+</style>

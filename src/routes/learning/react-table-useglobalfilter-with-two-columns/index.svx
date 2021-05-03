@@ -1,0 +1,157 @@
+---
+title: React Table useGlobalFilter with two columns
+seoTitle: React Table useGlobalFilter with two columns
+url: react-table-useglobalfilter-with-two-columns
+description: Using React-Table's useGlobalFilter hook to filter a table by two columns and in a typescript project
+abstract: Using React-Table's useGlobalFilter hook to filter a table by two columns and in a typescript project
+isPublished: true
+publishedOn: 2021-03-06T09:15:00-0000
+layout: article
+---
+
+<script>
+    import PrepsheetsScreenshot from './Prepsheets-Screenshot.png?w=600;800;1200&webp&srcset';
+</script>
+
+This week I needed to filter a table made with [React Table](https://github.com/tannerlinsley/react-table). React table is great for its extensibility and so has **hooks** for this: [useFilters](https://react-table.tanstack.com/docs/api/useFilters) and [useGlobalFilter](https://react-table.tanstack.com/docs/api/useGlobalFilter). `useFilter` is for filtering by an individual column and `useGlobalFilter` for filtering by content in any column.
+
+However I needed to filter two columns by a single input. My table is for ingredients and has columns for: _code, name, price per unit, supplier, etc_. I need to filter by name and code. I couldn't use `useFilters` as that would do an intersection (i.e. the search query would need to be in both the code and name row).
+
+See the end Code Sandbox at: [https://codesandbox.io/s/fuzzy-text-global-filter-rcy1f?file=/src/Table.tsx](https://codesandbox.io/s/fuzzy-text-global-filter-rcy1f?file=/src/Table.tsx)
+
+<img srcset={PrepsheetsScreenshot} alt="Prepsheets Screenshot">
+
+Filtering [Prepsheets.com](http://prepsheets.com) Ingredients by Code
+
+Thankfully, it's possible to do this with `useGlobalFilter`.
+
+```jsx
+import {
+	...,
+	useGlobalFilter,
+} from 'react-table'
+
+...
+
+const {
+	...,
+	setGlobalFilter,
+} = useTable(
+	{
+		...
+	},
+	...
+	useGlobalFilter,
+);
+```
+
+See Code Sandbox: [https://codesandbox.io/s/all-columns-global-filter-buof9?file=/src/Table.tsx](https://codesandbox.io/s/all-columns-global-filter-buof9?file=/src/Table.tsx)
+
+Awesome, by using `setGlobalFilter` we can now filter by the content in any column. To restrict which columns we filter we'll specify a custom `globalFilter` function.
+
+```jsx
+import {
+	...
+	useGlobalFilter,
+	Row, // Typescript
+	IdType, // Typescript
+}
+import React, { ..., useCallback } = 'react'
+
+...
+
+const ourGlobalFilterFunction = useCallback(
+	// This is Typescript if you're using JS remove the types (e.g. :string)
+	(rows: Row<T>[], ids: IdType<T>[], query: string) => {
+		return rows.filter((row) =>
+			row.values['code'].includes(query) ||
+			row.values['name'].includes(query)
+		);
+	},
+	[],
+);
+
+const {
+    ...
+    setGlobalFilter,
+} = useTable(
+	{
+		globalFilter: ourGlobalFilterFunction
+	},
+	...
+	useGlobalFilter,
+);
+```
+
+See Code Sandbox: [https://codesandbox.io/s/specific-columns-global-filter-n1k4v?file=/src/Table.tsx](https://codesandbox.io/s/specific-columns-global-filter-n1k4v?file=/src/Table.tsx)
+
+However, in my case this is inside a `Table` component which I use in a couple of places, so let's make `ourGlobalFilterFunction` take arbitrary column names for filtering. We'll also pass the filter query as a prop to `Table`.
+
+```jsx
+interface TableProps {
+	filters: string[];
+	filter: string;
+}
+
+const Table: React.FC<TableProps> = ({
+	filters,
+	filter,
+}): React.ReactComponent => {
+
+	const ourGlobalFilterFunction = useCallback(
+		// This is Typescript if you're using JS remove the types (e.g. :string)
+		(rows: Row<T>[], ids: IdType<T>[], query: string) => {
+			return rows.filter((row) =>
+				for (const filter of filters) {
+					return row.values[filter].includes(query)
+				}
+			);
+		},
+		[filters],
+	);
+
+	const {
+	  ...
+	  setGlobalFilter,
+	} = useTable(
+		{
+			globalFilter: ourGlobalFilterFunction
+		},
+		...
+		useGlobalFilter,
+	);
+
+	useEffect(() => {
+		setGlobalFilter(filter) // Set the Global Filter to the filter prop.
+	}, [filter, setGlobalFilter]);
+
+	return (
+		...
+	);
+}
+```
+
+Code Sandbox: [https://codesandbox.io/s/filter-props-global-filter-i18bd?file=/src/Table.tsx](https://codesandbox.io/s/filter-props-global-filter-i18bd?file=/src/Table.tsx)
+
+Finally, I'd like this to do **fuzzy text** filtering. We'll use the [match-sorter](https://github.com/kentcdodds/match-sorter) library for this
+
+```jsx
+npm install match-sorter
+```
+
+```jsx
+import { matchSorter } from 'match-sorter';
+
+...
+
+const globalFilter = useCallback(
+	(rows: Row<T>[], ids: IdType<T>[], query: string) => {
+		return matchSorter(rows, query, {
+			keys: filters.map((columnName) => `values.${columnName}`),
+		});
+	},
+	[filters],
+);
+```
+
+Code Sandbox: [https://codesandbox.io/s/fuzzy-text-global-filter-rcy1f?file=/src/Table.tsx](https://codesandbox.io/s/fuzzy-text-global-filter-rcy1f?file=/src/Table.tsx)

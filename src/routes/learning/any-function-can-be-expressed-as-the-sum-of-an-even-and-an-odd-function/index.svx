@@ -1,0 +1,84 @@
+---
+title: Any function can be expressed as the sum of an even and an odd function
+seoTitle: Any function can be expressed as the sum of an even and an odd function
+url: any-function-can-be-expressed-as-the-sum-of-an-even-and-an-odd-function
+description: Showing how any function f(x) can be expressed as the sum of an even function e(x) and an odd function o(e)
+abstract: Showing how any function f(x) can be expressed as the sum of an even function e(x) and an odd function o(e)
+isPublished: true
+publishedOn: 2021-03-17T09:15:00-0000
+layout: article
+---
+
+<script>
+    import EvenFunction from './even-function.png?w=200;300;400&webp&srcset';
+    import OddFunction from './odd-function.png?w=200;300;400&webp&srcset';
+    import SideBySide from '$lib/SideBySide.svelte'
+</script>
+
+I'm going through MIT's [18.01 course](https://ocw.mit.edu/courses/mathematics/18-01-single-variable-calculus-fall-2006/index.htm) on OCW to prep for the 18.01 ASE which I'm hoping to take in August. The content is great but the organisation on the website isn't. I'm currently writing up what I hope is an improved version, but I digress.
+
+In the [Graphing Functions Notes](https://ocw.mit.edu/courses/mathematics/18-01-single-variable-calculus-fall-2006/readings/g_graphng_fnctns.pdf) `even` and `odd` functions are mentioned:
+
+→ An even function is one whose graph is **symmetric** with respect to the y-axis:
+
+<SideBySide>
+<div slot="left">
+
+$$f(x) = f(-x)$$
+
+</div> 
+<img slot="right" srcset={EvenFunction} alt="Even Function" /> 
+</SideBySide>
+
+→ An odd function is one whose graph is **symmetric** with respect to the origin:
+
+<SideBySide>
+<div slot="left">
+
+$$-f(x)=f(-x)$$
+
+</div> 
+<img slot="right" srcset={EvenFunction} alt="Even Function" /> 
+</SideBySide>
+
+What's neat is that every function $f(x)$ can be written as the sum of an `even` function $e(x)$ and an `odd` function $o(x)$ where:
+
+$e(x) = \frac{1}{2}(f(x)+f(-x))$ **and**
+
+$o(x)=\frac{1}{2}(f(x)-f(-x))$
+
+Now, I only found this out while trying to do the first off the Problem Set questions, which I'll show a solution for below. But first the proof
+
+## Proof
+
+Suppose that the statement was true.
+
+Let $f(x)=e(x)+o(x)$ where **e** is even and **o** is odd
+
+Then:
+
+$f(-x)=e(-x)+o(-x)$
+
+but we know that $e(-x)=e(x)$ **and $o(-x)=-o(x)$** so:
+
+$f(-x)=e(x)-o(x)$
+
+and:
+
+$f(x)+f(-x)=2e(x)$
+
+and so:
+
+$e(x)=\frac{1}{2}(f(x)+f(-x))$
+
+Now, we just have to show that $o(x)=f(x)-e(x)$ is `odd` and we have proved this
+
+$o(x)=f(x)-e(x)=f(x)-\frac{f(x)+f(-x)}{2}=\frac{f(x)-f(-x)}{2}$
+
+and this is an odd function:
+
+$-o(x)=\frac{-f(x)+f(-x)}{2}=\frac{f(-x)-f(x)}{2}$
+
+$o(-x)=\frac{f(-x)-f(x)}{2}$
+
+TaDa 🎉

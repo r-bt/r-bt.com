@@ -1,0 +1,319 @@
+---
+title: Building a blog with Svelte and Notion
+seoTitle: Building a blog with Svelte and Notion
+url: building-a-blog-with-svelte-and-notion
+description: Tutorial for building a blog using svelte, sapper and sotion
+abstract: Tutorial for building a blog using svelte, sapper and sotion
+isPublished: true
+publishedOn: 2021-02-28T09:15:00-0000
+layout: article
+---
+
+<script>
+	import ListOfLearningPosts from './ListOfLearningPosts.png?w=600;800;1200&webp&srcset'
+	import RenderedOptionalChainingPage from './RenderedOptionalChainingPage.png?w=600;800;1200&webp&srcset'
+	import NotionPageMetadata from './NotionPageMetadata.png?w=600;800;1200&webp&srcset'
+</script>
+
+I've finally got this blog(ish) website setup in a way I'm happy with. Most of the site is just a static export from sapper but the **learning** pieces are all entries in a Notion table. Each page in the table has a `slug` property which sets the url you navigate to e.g. this piece is `building-a-blog-with-svelte-and-notion`.
+
+---
+
+## Setting up
+
+To begin you'll need to create a new sapper project:
+
+```jsx
+npx degit "sveltejs/sapper-template#rollup" my-svelte-notion-blog
+cd my-svelte-notion-blog
+npm install
+```
+
+This will scaffold the general structure for a sapper site. There's lots of template pages that you'll want to change (`index.svelte`, `about.svelte`, etc) but we're going to focus on the blog folder.
+
+Go ahead and delete everything inside the `blog` folder and create an empty `index.svelte` file.
+
+---
+
+## Creating the Notion Table
+
+First we'll need a Notion table where we are going to pull the posts from.
+
+1. Create a new page containing **Table - Full Page**
+2. Add a table item called **My first post** or whatever you like
+3. Give **My first post** a new property `slug` with value `my-first-post` – we'll use this for the url
+4. Click on **Share** and copy the id after the page's title in the url somewhere
+   - For example this page is *https://www.notion.so/rbeattie/Building-a-blog-with-Svelte-and-Notion-510a05b08ef842498d686c92614fe912* so I'll copy the id: `510a05b08ef842498d686c92614fe912`
+
+---
+
+## Listing all posts
+
+Now, we can get all the items from this table and display them in our website. Notion doesn't have a public API yet but fortunately [Splitbee](https://splitbee.io/) have created a [wrapper](https://github.com/splitbee/notion-api-worker) for their private API, which we'll interact with using [sotion](https://www.npmjs.com/package/sotion)
+
+```jsx
+npm install -D sotion
+```
+
+`Sotion` has built in support for building a blog based on our Notion table. First we'll _scope_ our posts to that table. In `_layout.svelte`
+
+```jsx
+<script>
+	import {sotion} from "sotion"; const tableId = 'xxxxxxxx' // Whatever you copied before
+	sotion.setScope(tableId)
+</script>
+```
+
+In `blog/index.svelte` let's fetch all our posts:
+
+```jsx
+<script>
+	import { onMount } from 'svelte';
+	import { sotion } from "sotion";
+
+	let posts = [];
+
+	onMount(() => {
+		posts = await sotion.getScope();
+	});
+</script>
+```
+
+`posts` is an array of objects representing the pages in our table:
+
+```jsx
+[
+	{
+	  id: "510a05b0-8ef8-4249-8d68-6c92614fe912",
+	  slug: "building-a-blog-with-svelte-and-notion",
+	  Name: "Building a blog with Svelte and Notion"
+	},
+  ...
+]
+```
+
+Finally, we'll render this as a list
+
+```html
+<ul>
+	{#if posts.length === 0}
+	<span>Loading...</span>
+	{/if} {#each posts as item (item.id)} {#if item.slug}
+	<li>
+		<a href="blog/{item.slug}"> {item.Name} </a>
+	</li>
+	{/if} {/each}
+</ul>
+
+<style>
+	ul {
+		list-style: none;
+		margin: 1rem 0 0 0;
+		padding: 0;
+	}
+
+	li {
+		padding: 0.25em 0;
+	}
+</style>
+```
+
+Awesome! Now you should have something like:
+
+<img srcset={ListOfLearningPosts} alt="List of Learning Posts on r-bt.com" >
+
+---
+
+## Displaying the posts
+
+Now clicking on one of those posts will redirect you to `blog/{slug}`. This is a **dynamic route** as we don't know what slug will be. Sapper handles this by putting brackets around the dynamic parameter in the route's filename: `blog/[slug].svelte`. We can then access the `slug` in `preload` script. For more info see: [https://sapper.svelte.dev/docs#Pages](https://sapper.svelte.dev/docs#Pages)
+
+In `blog/[slug].svelte`
+
+```jsx
+<script context="module">
+	import { Sotion, sotion } from "sotion";
+  export async function preload({ params }) {
+    try {
+      const { blocks, meta } = await sotion.slugPage(params.slug);
+      return { blocks, meta, slug: params.slug };
+    } catch (e) {
+      return e;
+    }
+  }
+</script>
+```
+
+We use `context="module"` so the page only renders once it has fetched the content. Importantly as we don't link to these slug pages before client-side javascript is executed this won't interfere with `sapper export`
+
+If we linked to a slug page `sapper export` will save the page when exporting stopping it from updating in the future (when directly navigated to)
+
+Then let's get the post's blocks and metadata (Notion properties)
+
+```jsx
+<script>export let blocks; export let meta;</script>
+```
+
+and finally we render those blocks
+
+```html
+<Sotion {blocks} />
+```
+
+Now you should be able to able to view your posts at `http://localhost:3000/blog/[slug]` and see the content from your Notion post rendered. This includes text, headings, code, lists and everything else
+
+<img srcset={RenderedOptionalChainingPage} alt="Optional Chaining Operator Notion page rendered on r-bt.com" >
+
+---
+
+## Post Metadata
+
+Unfortunately we're not done yet. If you want your blog to have resonable SEO and appear nicely on Twitter and Facebook it's important we add some metadata to the page. Twitter and Facebook have need special meta tags so they're is some duplication.
+
+```html
+<svelte:head>
+	<title>{meta.Name}</title>
+	<meta name="twitter:title" content="{meta.Name}" />
+	<meta property="og:title" content="{meta.Name}" />
+</svelte:head>
+```
+
+To set the page description we'll first add a `description` property to our posts' Notion page
+
+<img srcset={NotionPageMetadata} alt="Metadata for _Building a blog with Svelte and Notion_ page in Notion" >
+
+Then we set the description
+
+```html
+<svelte:head>
+	... {#if meta.description}
+	<meta name="description" content="{meta.description}" />
+	<meta name="twitter:description" content="{meta.description}" />
+	<meta property="og:description" content="{meta.description}" />
+	{/if}
+</svelte:head>
+```
+
+Finally there's some miscellaneous meta properties you might want to set for [Twitter](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started)
+
+```html
+<meta name="twitter:card" content="summary" />
+<!-- Your twitter handle -->
+<meta name="twitter:site" content="@r_bt_" />
+<meta name="twitter:creator" content="@r_bt_" />
+<!-- An image for the article -->
+<meta name="twitter:image" content="https://r-bt.com/profile.jpg" />
+```
+
+and Facebook
+
+```html
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://r-bt.com/learning/{slug}" />
+<meta property="og:image" content="https://r-bt.com/profile.jpg" />
+<meta property="og:site_name" content="R-BT Blog" />
+```
+
+---
+
+## Finish!
+
+You're done. You should now have your own blog powered by Notion with a page listing all your pages and then a dynamic route which renders these pages 😎
+
+You can put this online however you want, I export it and then host it on [Netlify](https://www.netlify.com/)
+
+```html
+npm run export
+```
+
+If you do **export** your site you need to redirect requests to `blog/[slug]` to `blog/index.html` or else users will get a 404 error since no static files will exist for these routes. With Netlify this is really easy. Create a `netlify.toml` file and set:
+
+```jsx
+[[redirects]];
+from = '/blog/*';
+to = '/blog/index.html';
+status = 200;
+force = true;
+```
+
+Now when users go to `yoursite.com/blog/first-post` Netlify will serve ``oursite.com/blog/index.html` and svelte's client side routing will step in.
+
+---
+
+## Extra: Sitemap
+
+It's good practice to include a `sitemap.xml` for your site. Since this needs to be dynamic we can't serve it with Sapper`s **Server Routes** (these are static when exported). Instead we can use **Netlify Functions.**
+
+Create a new folder `functions` in the root of your directory and then `sitemap.js` inside this.
+
+We're going to need `node-fetch` to get the posts from our Notion table, in your root directory run (i.e. functions does not have it's own `package.json`)
+
+```html
+npm install node-fetch
+```
+
+Now in `sitemap.js`
+
+```jsx
+const fetch = require('node-fetch');
+
+exports.handler = async (event) => {
+	const NOTION_API = 'https://notion-api.splitbee.io';
+	// Your Notion Table's ID
+	const id = '489999d5f3d240c0a4fedd9de71cbb6f';
+
+	// Fetch all the posts
+	let posts = [];
+	try {
+		posts = await fetch(`${NOTION_API}/table/${id}`, {
+			headers: { Accept: 'application/json' }
+		}).then((response) => response.json());
+	} catch (e) {
+		return { statusCode: 422, body: String(e) };
+	}
+
+	// Filter those posts to get their slugs
+	const filteredPages = pages.filter((item) => item.slug !== undefined).map((item) => item.slug);
+
+	// Create the sitemap
+	const domain = 'https://r-bt.com';
+	const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+			${filteredPages
+				.map(
+					(page) => `
+					<url>
+						<loc>${domain}/learning/${page}</loc>
+						<changefreq>weekly</changefreq>
+					</url>
+				`
+				)
+				.join('')}
+		</urlset>
+	`;
+
+	return {
+		statusCode: 200,
+		contentType: 'text/xml',
+		body: sitemap
+	};
+};
+```
+
+We're nearly there (both creating this sitemap and me finishing this post 🙂). Lastly we need to run this function when `yoursite.com/sitemap.xml` is requested. In `netlify.toml` add
+
+```jsx
+[[redirects]];
+from = '/sitemap.xml';
+to = '/.netlify/functions/sitemap';
+status = 200;
+force = true;
+```
+
+That's it. Commit and deploy to Netlify and your sitemap should be working. I actually had lots of issues getting this to work so if it dosen't for you [reach out](https://twitter.com/r_bt_)
+
+---
+
+## Improvements
+
+- I'd love if I could someway update each page automatically whenever there's a change in Notion. Live-reloading would be a nice UX while writing.

@@ -1,0 +1,81 @@
+---
+title: Firestore Validation
+seoTitle: Firestore Validation
+url: firestore-validation
+description: How to validate all of firestore's data types with security rules
+abstract: A How-To for validating firestore's data types with security rules
+isPublished: true
+publishedOn: 2021-02-20T09:15:00-0000
+layout: article
+---
+
+For [prepsheets.com](http://prepsheets.com) I use Firebase and Typescript. At the start I sort-of took type-safety to the extreme. I use [runtypes](https://github.com/pelotom/runtypes) to validate all the data that comes into the app and have firestore security rules which enforce a schema on the database. This is somewhat annoying, but I think it's end-positive as I can be sure of what data ends up in the database.
+
+---
+
+The first step is to ensure only valid field names are submitted (to stop users storing lots of arbitrary data)
+
+```jsx
+function incomingData() {
+   return request.resource.data;
+}
+
+function onlyHasAttrs(attrs){
+   return incomingData().keys().hasOnly(attrs);
+}
+
+match /users/{userId} {
+	allow create: if onlyHasAttrs(['name', 'email', 'picture', 'age']);
+}
+```
+
+This uses the [hasOnly](https://firebase.google.com/docs/reference/rules/rules.List#hasOnly) function on lists. It checks if all keys in incomingData are in `attrs`
+
+---
+
+Next I ensure that fields are off the correct type. This is easy for `strings` and `numbers`
+
+```jsx
+function hasValidSchema() {
+	return (
+		onlyHasAttrs(['name', 'email', 'picture', 'age']) &&
+		incomingData().name is string &&
+		incomingData().name.size() > 0 &&
+		incomingData().age is number
+	);
+}
+
+allow create: if hasValidSchema();
+```
+
+---
+
+Unfortunately things are more complicated with `lists` and `maps`. While you can ensure that a field is off the type `list` or `map` you can't validate the members of those objects. Or at least you can't validate an arbitrary number of them. See: [https://stackoverflow.com/a/58257828/3949864](https://stackoverflow.com/a/58257828/3949864). Apparently the firebase team is looking into this so you can help get list type safety faster by [filing a feature request](https://support.google.com/firebase/contact/support).
+
+For `map` attributes I only allow them to be set or updated to being empty. I use `Cloud Functions` to actually set the data, validating whatever is passed with runtypes.
+
+```jsx
+function hasValidMap() {
+	return (
+		incomingData().map is map &&
+		incomingData().map.size() == 0 ||
+		incomingData().map == existingData().map
+	);
+}
+```
+
+For `lists` I either use `Cloud Functions` to set the data or impose a maximum length. For example say we let users list their interests, but they can only list 5. Then in security rules we can use:
+
+```jsx
+function hasValidInterests(interests) {
+	return (
+		interests is list &&
+		(interests.size() < 1 || interests[0] is string) &&
+		(interests.size() < 2 || interests[1] is string) &&
+		(interests.size() < 3 || interests[2] is string) &&
+		(interests.size() < 4 || interests[3] is string) &&
+		(interests.size() < 5 || interests[4] is string) &&
+		(interests.size() < 6)
+	);
+}
+```

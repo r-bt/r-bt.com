@@ -1,0 +1,34 @@
+---
+title: Optional Chaining in Javascript
+seoTitle: How to use the Optional Chaining Operator in Javascript
+url: optional-chaining-js
+description: How to use the optional chaining operator in javascript
+abstract: Quick thoughts about a cool javascript operator
+isPublished: true
+publishedOn: 2021-02-14T09:15:00-0000
+layout: article
+---
+
+This is just a a small javascript operator which is quite cool
+
+Often I find myself having to write something like this
+
+```jsx
+if (obj && obj.prop1 && obj.prop1.prop2 && obj.prop1.prop2.prop3) {
+	// Type safe way of accessing prop3
+}
+```
+
+With the optional chaining operator you can write this instead
+
+```jsx
+if (obj?.prop1?.prop2?.prop3) {
+	// Type safe way of accessing prop3
+}
+```
+
+Which in my option is much more readable and just nicer to write.
+
+The gist is that using this operator makes it safe to chain accessing properties where one might be `undefined` or `null`
+
+You can see more about this at: [https://www.joshwcomeau.com/operator-lookup?match=optional-chaining](https://www.joshwcomeau.com/operator-lookup?match=optional-chaining)

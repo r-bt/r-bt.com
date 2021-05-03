@@ -1,0 +1,59 @@
+---
+title: Firebase emulators:start – getaddrinfo ENOTFOUND localhost localhost:4400
+seoTitle: Firebase emulators:start – getaddrinfo ENOTFOUND localhost localhost:4400
+url: firebase-emulators-getaddrinfo-error
+description: Fixing firebase emulators:start – getaddrinfo ENOTFOUND error
+abstract: The results of an hour spent fixing a simple firebase issue
+isPublished: true
+publishedOn: 2021-02-20T09:15:00-0000
+layout: article
+---
+
+For _some_ **_reason_** today `firebase start:emulators` broke on me. In the morning it worked fine but when I returned after lunch I just got
+
+```Javascript
+An unexpected error has occurred.
+```
+
+I tried restarting my laptop, rolling back `firestore.rules` changes and updating `firebase-tools` but nothing worked. The `firebase-debug.log` had some errors talking about not being able to find localhost
+
+```bash
+port check error: Error: getaddrinfo ENOTFOUND localhost localhost:4400
+```
+
+However, googling this query returned nothing for the first 30 mins. However, googling this query returned nothing. After an hour of experimenting I found the solution. Add the following to your `/etc/hosts` file:
+
+```bash
+127.0.0.1 localhost
+```
+
+Well that was an hour wasted. I still don't know how `localhost` got **disassociated** with `127.0.0.1`.
+
+```javascript
+// get-files.js
+import path from 'path';
+
+import fs from 'fs/promises';
+
+const isDir = async (d) => (await fs.lstat(d)).isDirectory();
+
+async function getFiles(dir) {
+	const list = await fs.readdir(dir);
+
+	const filePromises = list.map(async (filename) => {
+		const filepath = path.join(dir, filename);
+
+		if (await isDir(filepath)) {
+			return { type: 'dir', filepath };
+		} else {
+			const content = String(await fs.readFile(filepath));
+
+			return { type: 'file', filepath, content };
+		}
+	});
+
+	return Promise.all(filePromises);
+}
+
+export { getFiles };
+```

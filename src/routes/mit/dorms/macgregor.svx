@@ -1,0 +1,53 @@
+<script>
+  import Profile from "$lib/Profile/Profile.svelte";
+</script>
+
+<svelte:head>
+
+  <title>R-BT - MacGregor House – 🛏 Dorms - MIT</title>
+  <meta name="description" content="Information about MacGregor House, MIT" />
+</svelte:head>
+
+<Profile title="MacGregor House – 🛏 Dorms - MIT" />
+
+Is **99%** singles. Singles are grouped into suites of either 6 or 8 people. Suites have:
+
+- Bathroom
+- Kitchen
+- Suite lounge
+- Graduate Resident Advisor (GRA)
+
+**Suites** are quite nice, seem similar to Random's floors?
+
+Suites are then grouped into 9 entries (living units of about 30-44 people).
+
+Building itself has:
+
+- Weight room
+- Game room (Projector, Switch, PS4, puzzles, air hockey, ping pong, foosball, etc.)
+- Music room (equipped with guitars, drums, and a piano)
+- Study spaces (including group study rooms, whiteboards, library-like atmospheres, and an Athena computer cluster)
+
+Some cons:
+
+- Expensive: $6,100 - $5,390
+
+**Decision:**
+
+## Links
+
+- [MIT Residences – MacGregor House](https://mitguidetoresidences.mit.edu/map/macgregor-house)
+- [MacGregor Website](http://macgregor.mit.edu/)
+  - **Aside:** This is the nicest MIT dorm website I've seen. Really cool way of picking entries
+- [Reddit - Culture at MacGregor](https://www.reddit.com/r/mit/comments/8znt3g/culture_at_mac_gregor/)
+
+### MIT Admissions Blog Posts
+
+- [a state of moving by Waly N. '24](https://mitadmissions.org/blogs/entry/a-state-of-moving/)
+- [a shocking look inside a macgregor single by Abby H. '20 ](https://mitadmissions.org/blogs/entry/a-shocking-look-inside-a-macgregor-single/)
+
+<style>
+    .split {
+        display: flex;
+    }
+</style>

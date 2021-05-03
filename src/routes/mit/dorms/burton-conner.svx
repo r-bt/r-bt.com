@@ -1,0 +1,27 @@
+<script>
+  import Profile from "$lib/Profile/Profile.svelte";
+</script>
+
+<svelte:head>
+
+  <title>R-BT - Burton Conner House – 🛏 Dorms - MIT</title>
+  <meta name="description" content="Information about Burton Conner House, MIT" />
+</svelte:head>
+
+<Profile title="Burton Conner House – 🛏 Dorms - MIT" />
+
+Will be offline during 2022-2023 academic year. Means I would need to really fit with this culture to select it, as I'll have to move to another dorm
+
+- Is this bad? Would be a chance to get to try multiple MIT dorm cultures
+
+## Links
+
+- [MIT Residences – Burton Conner House](https://mitguidetoresidences.mit.edu/map/burton-conner-house)
+
+### MIT Admissions Blog Posts
+
+<style>
+    .split {
+        display: flex;
+    }
+</style>

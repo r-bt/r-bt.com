@@ -1,0 +1,28 @@
+<script>
+  import Profile from "$lib/Profile/Profile.svelte";
+</script>
+
+<svelte:head>
+
+  <title>R-BT - 🧩 Learning Communities – MIT</title>
+  <meta
+    name="description"
+    content="Information about the Learning Communities at MIT"
+  />
+</svelte:head>
+
+<Profile title="🧩 Learning Communities – MIT" />
+
+MIT has three learning communities, I know basically nothing about them but they sound interesting:
+
+- [ESG](/mit/learning-communities/esg)
+- Terrascope
+- Concourse
+
+Are _student-focused_, based on _small interactive classes_
+
+[Good Youtube video for an introduction](https://www.youtube.com/watch?time_continue=175&v=GCFr8ZEGvBY&feature=emb_logo)
+
+## Links
+
+- [Office of the first year](https://firstyear.mit.edu/academics-exploration/learning-communities)

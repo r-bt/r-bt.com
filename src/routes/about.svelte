@@ -1,50 +1,52 @@
-<script context="module">
-	import { browser, dev } from '$app/env';
-
-	// we don't need any JS on this page, though we'll load
-	// it in dev so that we get hot module replacement...
-	export const hydrate = dev;
-
-	// ...but if the client-side router is already loaded
-	// (i.e. we came here from elsewhere in the app), use it
-	export const router = browser;
-
-	// since there's no dynamic data here, we can prerender
-	// it so that it gets served as a static asset in prod
-	export const prerender = true;
+<script>
+	import Profile from '$lib/Profile/Profile.svelte';
 </script>
 
 <svelte:head>
-	<title>About</title>
+	<title>R-BT - About</title>
+	<meta name="description" content="About R-BT" />
 </svelte:head>
 
-<div class="content">
-	<h1>About this app</h1>
+<Profile title="About" />
 
+<div class="about">
 	<p>
-		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
-		following into your command line and following the prompts:
-	</p>
-
-	<!-- TODO lose the @next! -->
-	<pre>npm init svelte@next</pre>
-
-	<p>
-		The page you're looking at is purely static HTML, with no client-side interactivity needed.
-		Because of that, we don't need to load any JavaScript. Try viewing the page's source, or opening
-		the devtools network panel and reloading.
+		Hey, 👋. I'm Richard. I'm 19, live in Ireland and am currently on a Gap Year.
+		<br />
+		Next year I'll be studying computer science (probably) at MIT.
 	</p>
 
 	<p>
-		The <a href="/todos">TODOs</a> page illustrates SvelteKit's data loading and form handling. Try using
-		it with JavaScript disabled!
+		I've worked on lots of different projects but I'm hoping to begin a clean slate
+		<br />
+		with this website. So expect this website to update over the next year
+	</p>
+
+	<h3>Contact me</h3>
+	<p>
+		If you're like me and also talking to people but are nervous when starting conversations, <br />
+		here's some ways to contact me:
+	</p>
+	<ul>
+		<li>Ask for comments on a blog you've recently written</li>
+		<li>Talk about an interesting thought that came to you</li>
+		<li>Talk about project you've been working on</li>
+	</ul>
+</div>
+
+<div class="aside">
+	<p>
+		P.S: This site is made with
+		<a href="https://svelte.dev/" rel="noopener">Svelte</a>
+		and
+		<a href="https://sapper.svelte.dev/" rel="nopener">Sapper</a>. If you make
+		<br />
+		websites you should check them out
 	</p>
 </div>
 
 <style>
-	.content {
-		width: 100%;
-		max-width: var(--column-width);
-		margin: var(--column-margin-top) auto 0 auto;
+	div.aside {
+		font-size: 12px;
 	}
 </style>

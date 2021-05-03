@@ -1,0 +1,30 @@
+---
+title: Why is it so hard to find a domain
+seoTitle: Why is it so hard to find a domain
+url: why-is-it-so-hard-to-find-a-domain
+description: Ramblings from trying to find a domain
+abstract: Some random thoughts from trying to buy a domain. Should I get a generic, specific or random name?
+isPublished: true
+publishedOn: 2021-02-14T09:15:00-0000
+layout: article
+---
+
+A friend and I have been thinking of ideas to make some money to help pay for college, we've got a couple so now have moved onto the domain buying stage. So I've been thinking what exactly do you want in a domain?
+
+### Generic? / Specific? / Random?
+
+Seems like no-one can decide
+
+→ [bookings.com](http://bookings.com) – Generic but super-specific to the business itself.
+
+→ [google.com](http://google.com) – Yeah, just random
+
+→ [apple.com](http://apple.com) – Specific to a different industry
+
+→ [facebook.com](http://facebook.com) – Generic but it owns the concept now (i.e. colleges use to have their own _facebooks_)
+
+I say generic names are the best if you're going into an uncrowded industry and are selling a digital good to consumers. You can literally be the bookings.com of that industry, when you eventually get competitors they are behind because whatever they do to build their brand builds yours. "Oh I'm going to book a hotel online" → searches google for "hotel bookings" and you appear.
+
+However I'm not sure this works for physical products or if you're not selling to consumers. The owner of [milk.com](http://milk.com/value/) won't sell for less than $10 million. I just can't see it being worth that much. For one few people currently are buying milk online and when they do start they'll be buying from grocery stores not specific website for each good. Industry organisations might want it, but again if consumers aren't going to be searching milk then it's not great for advertising on.
+
+**Random** names require more time being spent branding. They're unavoidable in crowded markets, but I prefer generic. Especially since the [US supreme court recently ruled](https://www.theverge.com/2020/7/1/21309739/booking-trademark-name-supreme-court-ruling-website) that bookings.com qualifies for a trademark, and therefore generally if you build a brand with a generic domain you can trademark the word.
