@@ -17,8 +17,8 @@ async function createSitemap() {
 
 	pages.forEach((page) => {
 		const url = sitemap.ele('url');
-		url.att('loc', getUrl(page));
-		url.att('changefreq', 'weekly');
+		url.ele('loc').txt(getUrl(page));
+		url.ele('changefreq').txt('weekly');
 	});
 
 	const xml = sitemap.end({ prettyPrint: true });
