@@ -1,0 +1,217 @@
+---
+title: SvelteKit Sitemap
+seoTitle: SvelteKit Sitemap
+url: sveltekit-sitemap
+description: Creating a sitemap.xml for a SvelteKit Site
+abstract: An easy script for creating a sitemap.xml when exporting a sveltekit static site
+isPublished: true
+publishedOn: 2021-05-03T09:45:00-0000
+layout: article
+---
+
+[SvelteKit](https://kit.svelte.dev/) came out in public beta a little over a month ago and I've finally gotten around to trying it out. I'll write up my thoughts elsewhere but I've moved [r-bt.com](http://r-bt.com) over to SvelteKit and replaced my Notion CMS with markdown. The reason being I want to be able to use custom components. Anyway, one problem I had was creating a sitemap.xml for my static build. SvelteKit dosn't support creating sitemaps automatically although it might in the [future](https://github.com/sveltejs/kit/issues/1142).
+
+Instead I made a post build step. Some notes about this:
+
+- I'm using Node v14 if you use an earlier version you might need to change `import` to `require`
+- I use `@sveltejs/adapter-static` to build a static site which is stored in `/build`
+
+### The Script
+
+**1.** Install the dependencies
+
+```jsx
+npm install -D fast-glob xmlbuilder2
+```
+
+**2.** Create a new file `generate-sitemap.xml` and add the following:
+
+```javascript
+import fs from 'fs';
+import fg from 'fast-glob';
+import { create } from 'xmlbuilder2';
+import pkg from './package.json';
+
+const getUrl = (url) => {
+	const trimmed = url.slice(6).replace('index.html', '');
+	return `${pkg.url}/${trimmed}`;
+};
+
+async function createSitemap() {
+	const sitemap = create({ version: '1.0' }).ele('urlset', {
+		xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+	});
+
+	const pages = await fg(['build/**/*.html']);
+
+	pages.forEach((page) => {
+		const url = sitemap.ele('url');
+		url.ele('loc').txt(getUrl(page));
+		url.ele('changefreq').txt('weekly');
+	});
+
+	const xml = sitemap.end({ prettyPrint: true });
+
+	fs.writeFileSync('build/sitemap.xml', xml);
+}
+
+createSitemap();
+```
+
+**3.** Update your package.json
+
+```json
+{
+    url: "https://your-url.com",
+    scripts: {
+        ...,
+        "postbuild": "node --experimental-json-modules ./generate-sitemap.js",
+    }
+}
+```
+
+### The Explaination
+
+To make the sitemap we're going to build the site, `glob` all the `.html` files, and write the xml back to the `/build` directory.
+
+Before starting install the dependecies
+
+```jsx
+npm install -D fast-glob xmlbuilder2
+```
+
+Now create a new file `generate-sitemap.xml`
+
+First, let's get the files we need:
+
+```javascript
+import fg from 'fast-glob';
+
+async function createSitemap() {
+	const pages = await fg(['build/**/*.html']);
+
+	console.log({ pages });
+}
+```
+
+If you run this you should get an array with the paths of all your pages
+
+```javascript
+{
+	pages: [
+		'build/index.html',
+		'build/blog/index.html',
+		'build/about/index.html',
+		'build/learning/index.html',
+		...
+	];
+}
+```
+
+Next we'll use `xmlbuilder` to create the xml objects
+
+```javascript
+import { create } from 'xmlbuilder2';
+
+const sitemap = create({ version: '1.0' }).ele('urlset', {
+	xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+});
+```
+
+and we just loop through the pages adding each as a `url` object with a `loc` and `changefrequency` to the sitemap
+
+```javascript
+pages.forEach((page) => {
+	const url = sitemap.ele('url');
+	url.ele('loc').txt(page);
+	url.ele('changefreq').txt('weekly');
+});
+```
+
+Finally we turn the sitemap into a `string` and write it to a file using `fs.writeFileSync`
+
+```javascript
+import fs from 'fs';
+import fg from 'fast-glob';
+import { create } from 'xmlbuilder2';
+
+async function createSitemap() {
+	const sitemap = create({ version: '1.0' }).ele('urlset', {
+		xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+	});
+
+	const pages = await fg(['build/**/*.html']);
+
+	console.log({ pages });
+
+	pages.forEach((page) => {
+		const url = sitemap.ele('url');
+		url.ele('loc').txt(page);
+		url.ele('changefreq').txt('weekly');
+	});
+
+	const xml = sitemap.end({ prettyPrint: true });
+
+	fs.writeFileSync('build/sitemap.xml', xml);
+}
+
+createSitemap();
+```
+
+**Except** we have a problem. If you run this code:
+
+```javascript
+node generate-sitemap.js
+```
+
+and go to **build/sitemap.xml** you'll see that the locs are something that looks like:
+
+```
+build/learning/why-is-it-so-hard-to-find-a-domain/index.html
+```
+
+while we want it to be:
+
+```
+https://r-bt.com/learning/why-is-it-so-hard-to-find-a-domain/
+```
+
+To fix this go to your `package.json` and add
+
+```json
+{
+	"url": "https://your-url.com"
+}
+```
+
+Then in `generate-sitemap.js` we'll import `package.json` and append the url to the pages paths. We'll also remove the first 5 characters _**build/**_ and _**index.html**_
+
+```javascript
+import pkg from './package.json';
+
+const getUrl = (url) => {
+	const trimmed = url.slice(6).replace('index.html', '');
+	return `${pkg.url}/${trimmed}`;
+};
+```
+
+Node.js dosn't yet importing .json files so need to run this script with the
+`--experimental-json-modules` flag
+
+```bash
+node --experimental-json-modules ./generate-sitemap.js
+```
+
+and you're sitemap should be generated and valid 🎉
+
+To get it to run whenever you build the site go back to `package.json` and in `scripts` add
+
+```json
+{
+    scripts:{
+        ...,
+        "postbuild": "node --experimental-json-modules ./generate-sitemap.js",
+    }
+}
+
+```
