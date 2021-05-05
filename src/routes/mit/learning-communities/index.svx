@@ -17,7 +17,7 @@ MIT has three learning communities, I know basically nothing about them but they
 
 - [ESG](/mit/learning-communities/esg)
 - Terrascope
-- Concourse
+- [Concourse](/mit/learning-communities/concourse)
 
 Are _student-focused_, based on _small interactive classes_
 

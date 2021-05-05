@@ -1,0 +1,26 @@
+<script>
+  import Profile from "$lib/Profile/Profile.svelte";
+  import QandA from "$lib/QandA.svelte";
+</script>
+
+<svelte:head>
+
+  <title>R-BT - Concourse - 🧩 Learning Communities – MIT</title>
+  <meta
+    name="description"
+    content="Information about the Concourse at MIT"
+  />
+</svelte:head>
+
+<Profile title="Concourse - 🧩 Learning Communities – MIT" />
+
+- Offer science and humanities GIRs
+  - Offers maths, physic and chemistry
+- Also offer humanities subjects (Is this my HASS requirment? Does this take up credit)
+
+<QandA question="Can I apply for both ESG and Concourse?" answer="Yes, if you're interested in Concourse you have to rank it #1 on your advising application but Terrascope or ESG can be anywhere within the top 5" />
+
+## Links
+
+- [How do I apply](http://concourse.mit.edu/how-do-i-apply/)
+- [Concourse Website](http://concourse.mit.edu/)
